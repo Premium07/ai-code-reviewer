@@ -3,6 +3,6 @@ import { getReview } from "../controllers/ai.controller.js";
 
 const router = Router();
 
-router.post("/get-review", getReview);
+router.post("/review", getReview);
 
 export default router;
