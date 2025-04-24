@@ -4,21 +4,30 @@ import prism from "prismjs";
 import Editor from "react-simple-code-editor";
 import axios from "axios";
 import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css";
 
 const App = () => {
   const [code, setCode] = useState("");
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     prism.highlightAll();
-  }, []);
+  }, [code]);
+
+  // useEffect(() => {
+  //   prism.highlightAll();
+  // }, []);
 
   const reviewCode = async () => {
+    setLoading(true);
     const res = await axios.post("http://localhost:8080/ai/review", {
       code,
     });
     const { data } = res;
     setReview(data);
+    setLoading(false);
   };
 
   return (
@@ -48,11 +57,18 @@ const App = () => {
           onClick={reviewCode}
           className="absolute bottom-4 right-4 py-2 px-8 rounded cursor-pointer text-zinc-200 font-semibold bg-zinc-900"
         >
-          Review
+          {loading ? (
+            <div className="flex items-center">
+              <div className="animate-spin rounded-full size-5 border border-t-2 border-t-white"></div>
+              <span className="ml-2">Reviewing...</span>
+            </div>
+          ) : (
+            "Review"
+          )}
         </button>
       </section>
       <section className="h-full flex basis-1/2 bg-zinc-700 rounded text-white p-4 overflow-auto flex-col gap-4">
-        <Markdown>{review}</Markdown>
+        <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
       </section>
     </main>
   );
