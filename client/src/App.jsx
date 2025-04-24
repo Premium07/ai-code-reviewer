@@ -31,8 +31,8 @@ const App = () => {
   };
 
   return (
-    <main className="h-screen w-full p-5 flex items-center gap-4 bg-zinc-900">
-      <section className="h-full  basis-1/2 bg-zinc-800 rounded relative">
+    <main className="h-screen w-full p-4 flex items-center gap-4 bg-zinc-900">
+      <section className="h-full basis-1/2 rounded-xl bg-zinc-800 relative">
         <div className="h-full">
           <Editor
             value={code}
@@ -40,7 +40,7 @@ const App = () => {
             highlight={(code) =>
               prism.highlight(code, prism.languages.javascript, "javascript")
             }
-            placeholder="Enter your code here..."
+            placeholder="To review your code, Enter or paste here..."
             padding={10}
             style={{
               fontFamily: '"Fira code", "Fira Mono", monospace',
@@ -48,7 +48,7 @@ const App = () => {
               height: "100%",
               overflow: "auto",
               width: "100%",
-              borderRadius: "5px",
+              borderRadius: "10px",
               color: "white",
             }}
           />
@@ -67,9 +67,14 @@ const App = () => {
           )}
         </button>
       </section>
-      {review && (
+
+      {review ? (
         <section className="h-full flex basis-1/2 text-justify bg-zinc-700 rounded text-white p-4 overflow-auto flex-col gap-4">
           <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+        </section>
+      ) : (
+        <section className="h-full basis-1/2 text-8xl flex items-center justify-center text-zinc-800 font-bold text-center">
+          Your AI Code Reviewer.
         </section>
       )}
     </main>
