@@ -67,9 +67,11 @@ const App = () => {
           )}
         </button>
       </section>
-      <section className="h-full flex basis-1/2 bg-zinc-700 rounded text-white p-4 overflow-auto flex-col gap-4">
-        <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
-      </section>
+      {review && (
+        <section className="h-full flex basis-1/2 text-justify bg-zinc-700 rounded text-white p-4 overflow-auto flex-col gap-4">
+          <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+        </section>
+      )}
     </main>
   );
 };
