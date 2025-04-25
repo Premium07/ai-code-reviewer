@@ -7,7 +7,7 @@ const app = express();
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "production"
-      ? ["https://your-frontend-vercel-url.vercel.app"]
+      ? [process.env.CLIENT_URL]
       : ["http://localhost:5173"], // Include Vite's default port
   credentials: true,
 };
