@@ -24,12 +24,9 @@ const App = () => {
   const reviewCode = async () => {
     setLoading(true);
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/ai/review`,
-        {
-          code,
-        }
-      );
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/review`, {
+        code,
+      });
       const { data } = res;
       setReview(data);
     } catch (error) {
