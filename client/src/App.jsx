@@ -6,6 +6,7 @@ import axios from "axios";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
+import { toast } from "react-hot-toast";
 
 const App = () => {
   const [code, setCode] = useState("");
@@ -22,12 +23,21 @@ const App = () => {
 
   const reviewCode = async () => {
     setLoading(true);
-    const res = await axios.post("http://localhost:8080/ai/review", {
-      code,
-    });
-    const { data } = res;
-    setReview(data);
-    setLoading(false);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/ai/review`,
+        {
+          code,
+        }
+      );
+      const { data } = res;
+      setReview(data);
+    } catch (error) {
+      // Consider adding error handling here
+      toast.error("Error reviewing code:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
